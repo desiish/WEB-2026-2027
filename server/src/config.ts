@@ -14,6 +14,12 @@ convict.addFormat({
 });
 
 export const config = convict({
+  port: {
+    doc: "HTTP server port",
+    format: "port",
+    default: 3005,
+    env: "PORT",
+  },
   db: {
     host: {
       doc: "Database host",
@@ -52,9 +58,19 @@ export const config = convict({
       env: "DB_SCHEMA",
     },
   },
+  jwtSecret: {
+    doc: "JWT signing secret",
+    format: "requiredString",
+    default: "",
+    env: "JWT_SECRET",
+  },
 });
 
 config.validate({ allowed: "strict" });
+
+export const serverPort = config.get("port");
+
+export const jwtSecret = config.get("jwtSecret");
 
 export const dbConfig = {
   host: config.get("db.host"),

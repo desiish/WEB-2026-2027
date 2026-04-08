@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { MovieEntity } from "./movie-entity";
 
 @Entity("user")
 export class UserEntity {
@@ -7,4 +8,10 @@ export class UserEntity {
 
   @Column({ name: "name", type: "varchar", length: 255 })
   name!: string;
+
+  @Column({ name: "password", type: "varchar", length: 255 })
+  password!: string;
+
+  @OneToMany(() => MovieEntity, (movie) => movie.user)
+  movies?: MovieEntity[];
 }
